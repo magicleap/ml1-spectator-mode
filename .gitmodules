@@ -1,0 +1,3 @@
+[submodule "Packages/com.magicleap.spectator.networkanchors"]
+	path = Packages/com.magicleap.spectator.networkanchors
+	url = git@github.com:magicleap/com.magicleap.spectator.networkanchors.git

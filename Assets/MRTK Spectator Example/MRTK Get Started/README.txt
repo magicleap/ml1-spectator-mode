@@ -1,0 +1,1 @@
+This package should be changed before release. It is the default MRTK Getting Started Package

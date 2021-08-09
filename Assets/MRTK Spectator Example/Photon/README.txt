@@ -1,0 +1,1 @@
+This is a place holder package. Currently it is a slightly modefied version of MRTK's Networking sample project
