@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: Magic Leap
   productName: spectator-mode
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -128,7 +128,9 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: 26d89f05f58d2124f939eef5563036dd, type: 2}
+  - {fileID: 8369673144662569090, guid: 32ecdad591dc6d340a60c4b445061b94, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -146,7 +148,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Lumin: com.DefaultCompany.spectator-mode
+    Lumin: com.MagicLeap.spectator-mode
     Standalone: com.DefaultCompany.spectator-mode
   buildNumber:
     Standalone: 0
@@ -321,6 +323,9 @@ PlayerSettings:
   - m_BuildTarget: WebGLSupport
     m_APIs: 0b000000
     m_Automatic: 1
+  - m_BuildTarget: LuminSupport
+    m_APIs: 0b00000011000000
+    m_Automatic: 0
   m_BuildTargetVRSettings:
   - m_BuildTarget: Standalone
     m_Enabled: 0
@@ -676,7 +681,7 @@ PlayerSettings:
     m_ModelFolderPath: 
     m_PortalFolderPath: 
   luminCert:
-    m_CertPath: 
+    m_CertPath: C:/Users/kbabi/Documents/MagicLeap/DeveloperKeys/privatekey/smiledpinguin-devrel.cert
     m_SignPackage: 1
   luminIsChannelApp: 0
   luminVersion:
