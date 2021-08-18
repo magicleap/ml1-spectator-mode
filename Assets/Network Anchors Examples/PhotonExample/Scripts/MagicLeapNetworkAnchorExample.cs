@@ -11,9 +11,21 @@ public class MagicLeapNetworkAnchorExample : MonoBehaviour
     void Start()
     {
 #if PLATFORM_LUMIN
-        MLInput.OnTriggerDown += HandleOnTriggerDown;
+        MLInput.OnControllerButtonDown += HandleOnButtonDown;
 #endif
     }
+
+
+    /// <summary>
+    /// Stop input api and unregister callbacks.
+    /// </summary>
+    void OnDestroy()
+    {
+#if PLATFORM_LUMIN
+        MLInput.OnControllerButtonDown -= HandleOnButtonDown;
+#endif
+    }
+
 
     void Update()
     {
@@ -22,16 +34,26 @@ public class MagicLeapNetworkAnchorExample : MonoBehaviour
             NetworkAnchorLocalizer.CreateOrGetAnchor();
         }
     }
-
+    ///
     /// <summary>
-    /// Handles the event for trigger down.
+    /// Handles the event for button down.
     /// </summary>
     /// <param name="controller_id">The id of the controller.</param>
-    /// <param name="value">The value of the trigger button.</param>
-    private void HandleOnTriggerDown(byte controllerId, float value)
+    /// <param name="button">The button that is being pressed.</param>
+    private void HandleOnButtonDown(byte controllerId, MLInput.Controller.Button button)
     {
+
 #if PLATFORM_LUMIN
-        NetworkAnchorLocalizer.CreateOrGetAnchor();
+        MLInput.Controller controller = MLInput.GetController(controllerId);
+
+        if (controller != null && controller.Id == controllerId &&
+            button == MLInput.Controller.Button.Bumper)
+        {
+            // Demonstrate haptics using callbacks.
+            NetworkAnchorLocalizer.CreateOrGetAnchor();
+            controller.StartFeedbackPatternVibe(MLInput.Controller.FeedbackPatternVibe.ForceDown, MLInput.Controller.FeedbackIntensity.Medium);
+        }
 #endif
     }
+
 }

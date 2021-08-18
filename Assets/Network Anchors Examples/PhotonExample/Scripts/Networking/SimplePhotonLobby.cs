@@ -14,11 +14,12 @@ using UnityEngine;
         public static SimplePhotonLobby Lobby;
 #if PHOTON
 
-        private int roomNumber = 1;
-        private int userIdCount;
+
 
         private void Start()
         {
+            PhotonNetwork.AutomaticallySyncScene = false;
+
             if (Lobby == null)
             {
                 Lobby = this;
@@ -43,7 +44,6 @@ using UnityEngine;
             PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.AuthValues = new AuthenticationValues();
             PhotonNetwork.AuthValues.UserId = randomUserId.ToString();
-            userIdCount++;
             PhotonNetwork.NickName = PhotonNetwork.AuthValues.UserId;
             PhotonNetwork.JoinRandomRoom();
         }
@@ -73,7 +73,6 @@ using UnityEngine;
         public override void OnCreatedRoom()
         {
             base.OnCreatedRoom();
-            roomNumber++;
         }
 
         public void OnCancelButtonClicked()

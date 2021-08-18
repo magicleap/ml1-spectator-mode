@@ -1,33 +1,30 @@
 #if PHOTON
 using System.Collections;
-using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 #endif
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 /// <summary>
 /// Interfaces with Photon and transmits the information to the Network Anchor Service. Also starts the service.
 /// </summary>
-public class PhotonNetworkAnchorController : MonoBehaviour
+public class PhotonNetworkAnchorController : MonoBehaviour, IInRoomCallbacks
 {
     public NetworkAnchorService NetworkAnchorService;
 
     public MultiPlatformCoordinateProvider MultiPlatformCoordinateProvider;
 
 #if PHOTON
-    void Awake()
+    private void Awake()
     {
         PhotonNetwork.NetworkingClient.LoadBalancingPeer.ReuseEventInstance = true;
         NetworkAnchorService.OnBroadcastNetworkEvent += SendNetworkAnchorEvent;
-#if UNITY_STANDALONE
-        //To help with syncing
-        Application.targetFrameRate = 30;
-#endif
+        PhotonNetwork.AddCallbackTarget(this);
     }
 
-    void Reset()
+    private void OnValidate()
     {
         if (NetworkAnchorService == null)
         {
@@ -45,39 +42,61 @@ public class PhotonNetworkAnchorController : MonoBehaviour
         {
             yield return null;
         }
-    
-        NetworkAnchorService.StartService(PhotonNetwork.LocalPlayer.ActorNumber.ToString(), MultiPlatformCoordinateProvider);
+        yield return new WaitForSeconds(3);
+        yield return NetworkAnchorService.RequestConnectToService(PhotonNetwork.LocalPlayer.ActorNumber, MultiPlatformCoordinateProvider);
+        yield return new WaitForSeconds(3);
 
+        if (NetworkAnchorService.IsConnected == false)
+        {
+            Debug.LogWarning("Could not connect, retrying...");
+
+            StartCoroutine(Start());
+        }
     }
 
     // These functions are Photon specific for now but could be linked to any other network layer.
     //Listen to Photon Events
-    void OnEnable()
+    private void OnEnable()
     {
         PhotonNetwork.NetworkingClient.EventReceived += CaptureEvent;
     }
     // Remove Photon Events Listener
-    void OnDisable()
+    private void OnDisable()
     {
+        NetworkAnchorService.DisconnectFromService();
         PhotonNetwork.NetworkingClient.EventReceived -= CaptureEvent;
     }
+
+    
     //Catch photon events and pass it into the Network Anchor's generic network event listener
     private void CaptureEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
+
+        if(eventCode<200) 
             NetworkAnchorService.ProcessNetworkEvents(eventCode, photonEvent.CustomData);
     }
+
 
     private void SendNetworkAnchorEvent(byte networkEventCode, string jsonData, int[] players)
     {
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+
         if (players.Length > 0)
         {
-            if (players[0] == -1)
+            if (players[0] == (int)NetworkAnchorService.SendCode.MASTER_CLIENT)
             {
                 raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
             }
-            else if (players.Length > 0)
+            else if (players[0] == (int)NetworkAnchorService.SendCode.OTHERS)
+            {
+                raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+            }
+            else if (players[0] == (int)NetworkAnchorService.SendCode.ALL)
+            {
+                raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All};
+            }
+            else if (players[0] >= 0)
             {
                 raiseEventOptions = new RaiseEventOptions { TargetActors = players };
             }
@@ -87,4 +106,29 @@ public class PhotonNetworkAnchorController : MonoBehaviour
     }
 #endif
 
+    /// <summary>
+    /// Removes players who have been disconnected from the server
+    /// </summary>
+    /// <param name="otherPlayer"></param>
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+            NetworkAnchorService.DisconnectFromService(otherPlayer.ActorNumber);
+    }
+
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+    }
+
+    public void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+    }
 }
