@@ -3,14 +3,18 @@ using System.Collections;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 #endif
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 /// <summary>
 /// Interfaces with Photon and transmits the information to the Network Anchor Service. Also starts the service.
 /// </summary>
-public class PhotonNetworkAnchorController : MonoBehaviour, IInRoomCallbacks
+public class PhotonNetworkAnchorController : MonoBehaviour
+#if PHOTON
+    , IInRoomCallbacks
+#endif
 {
     public NetworkAnchorService NetworkAnchorService;
 
@@ -77,7 +81,6 @@ public class PhotonNetworkAnchorController : MonoBehaviour, IInRoomCallbacks
             NetworkAnchorService.ProcessNetworkEvents(eventCode, photonEvent.CustomData);
     }
 
-
     private void SendNetworkAnchorEvent(byte networkEventCode, string jsonData, int[] players)
     {
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
@@ -104,7 +107,6 @@ public class PhotonNetworkAnchorController : MonoBehaviour, IInRoomCallbacks
 
         PhotonNetwork.RaiseEvent(networkEventCode, jsonData, raiseEventOptions, SendOptions.SendReliable);
     }
-#endif
 
     /// <summary>
     /// Removes players who have been disconnected from the server
@@ -131,4 +133,6 @@ public class PhotonNetworkAnchorController : MonoBehaviour, IInRoomCallbacks
     public void OnMasterClientSwitched(Player newMasterClient)
     {
     }
+#endif
+
 }

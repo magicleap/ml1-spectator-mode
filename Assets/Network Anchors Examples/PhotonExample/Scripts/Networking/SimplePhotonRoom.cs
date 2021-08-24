@@ -80,13 +80,13 @@ using UnityEngine;
 
         private void StartGame()
         {
-            CreatPlayer();
+            CreatePlayer();
 
             if (!PhotonNetwork.IsMasterClient) return;
 
         }
 
-        private void CreatPlayer()
+        private void CreatePlayer()
         {
             var player = PhotonNetwork.Instantiate(photonUserPrefab.name, Vector3.zero, Quaternion.identity);
         }
