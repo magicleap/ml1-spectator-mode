@@ -1,30 +1,30 @@
 # Spectator View
 
-This project demonstrates how to render virtual content using an external camera and a Magic Leap's headset position. This readme includes the instructions as well as the technical information required to create custom streaming solutions. Please report any questions and issues using Github’s issue ticketing system.  
+This project demonstrates how to render virtual content using an external camera and a Magic Leap's headset position. In this demo, we use the [magicleap.spectator.networkanchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main) package create a multi-user colocation experience. 
+
+This readme includes the instructions as well as the technical information required to create custom streaming solutions. Please report any questions or issues using Github’s issue ticketing system.  
 
 **Note**:  
-The NDI streaming plugin is compatible with more platforms while the Spout plugin offers better video streaming latency.
-
 This project uses submodules. Use `git clone --recurse-submodules` when cloning.
 
 ## Requirements
-**Standalone Client** 
-- Unity 2020.2 +
-- Windows: D3D11 and D3D12 are supported 
-- macOS: Metal required
-- Linux: Vulkan required
+**Desktop & Magic Leap**
+- Unity 2020.3.x
 - Photon
-
-**Standalone Client (Spout Streaming)**
-- Unity 2020.2 +
-- URP / HDRP
-- Windows: D3D11 and D3D12 are supported  
-- Photon
+- com.magicleap.spectator.networkanchors
 
 **Magic Leap** 
-- Unity 2020.2 +
 - Lumin SDK 0.25.0+
-- Photon
+
+**Standalone Client  (NDI Streaming)**
+- Windows: D3D11 or D3D12 
+- macOS: Metal required
+- Linux: Vulkan required
+
+**Standalone Client (Spout Streaming)**
+*Offers better video streaming latency.*
+- Windows: D3D11 or D3D12 
+- URP / HDRP
 
 ## Getting Started
 The following steps are required create or add a spectator view to your project :
@@ -36,67 +36,21 @@ The following steps are required create or add a spectator view to your project 
 * Magic Leap Unity SDK / Package
 
 ### Create A Co-Location Network Experience
-In this section we will use the Photon and the included Network Anchors package to create a colocation experience. If you are using an existing project that has co-location implemented, you can skip this section.
+This project contains a pre-configured colocation experience. To learn how to create your own. View the com.magicleap.spectator.networkanchors packages [README](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main).
 
-####  Enable Photon Examples
-1. Add download PUN 2 from the asset store and import it into your project.
-2. Define the your Photon credentials in using the PUN wizard or PUN Server settings.
-3. To enable the photon example scripts, navigate to the Player Settings  (Edit > Project Settings , then click Player).
-4. Add PHOTON to the Scripting Define Symbols, located under the Other Settings section, then click Apply.
+### Create the Desktop Spectator Client
+We will use the Desktop client to render the Virtual Content. To match the virtual content's position with the external camera, we will create a virtual camera that can follow the network position of the Magic Leap. This guide will use the Photon sample including the NetworkAnchorsExample sample scene from the [NetworkAnchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main) package.
 
-#### Create a Simple Scene
-1. From the menu select File> New Scene. Then select the Basic (Built-in) template.
-2. Replace the existing main camera with the Magic Leap Camera Prefab located under `Packages/Magic Leap SDK/Tools/Prefabs`.
-3. Save the new scene, name it NetworkAnchorsExample.
-
-#### Create the Photon Controller
-1. Create an empty GameObject named PhotonController
-2. Add the Simple Photon Room and Simple Photon Lobby components.
-3. Set the Photon User Prefab to the SimplePhotonUser prefab located under `Assets/Network Anchors Examples/ PhotonExample/Resources/`
-
-#### Implementing Network Anchors
-1. Create an empty GameObject called NetworkAnchor
-2. Set the transform's position to `0, 0, 1` and the rotation to `0, 18, 0`.
-3. Add the Network Anchor Service component to the object. 
-4. Then and the Network Anchor Localizer component.
-5. Use the Network Anchor's Localizer's OnAnchorPlaced event to visualize when the anchor has been created/localized:
-    1. Create a cube as a child of the object
-    2. Set the scale to `0.3, 0.3, 0.3` and disable it. 
-    3. Select the NetworkAnchor
-    4. Create a new OnAnchorPlaced event
-    5. Set the event target as the Cube and the event as GameObject.SetActive, set it to true.
-1. Add the MultiPlatformCoordinateProvider prefab from `Assets/NetworkAnchorsExamples/PhotonExample/Prefabs` into the scene.
-
-#### Connect the Service to Photon
-1. Create an empty GameObject called PunNetworkAnchorController
-2. Add the PhotonNetworkAnchorController component.
-3. Set the fields with the objects in your scene.
-
-#### Call Create or Find Network Anchor
-1. Select the Main Camera Prefab and add the Magic Leap Network Anchor Example component.
-2. Set the Network Anchor Localizer field to target the Network Anchor
-
-#### Build and Run
-- Save your example scene.
-- From the Project settings, enable the Internet privileges.
-- Set your project's project Identification Information.
-- Target your developer certificate in the project settings.
-- Deploy to device. 
-
-To create or find a network anchor on the Magic Leap Headsets, press the trigger on the controller. On the desktop, select the game and press the spacebar.
-
-### Create the Desktop Client
-We will use the Desktop client to render the Virtual Content. To match the virtual content's position with the external camera, we will create a virtual camera that can follow the network position of the Magic Leap.
+1. Duplicate your project folder or switch your project to Standalone and set the Graphic API to the one listed in the [Requirements](requirements) section.
 
 #### Create the NDI Rig
-1. Duplicate your project folder or switch your project to Standalone and set the Graphic API to the one listed in the Requirements section.
-2. In your the NetworkAnchorsExample scene, create a new empty GameObject name it NDIController
-3. Add the NDI Controller component to the object.
-4. Create an empty GameObject as a child of the NDI controller. Name it Root.
-5. Create a new Camera as a child of the Root object. Name it NDICamera.
-6. Set the Camera's Clear Flags to Solid Color, and set the background to Black with zero opacity.
-7. Add the Nndi Sender Component, select Enable Alpha and set the capture method to camera. Set the sender's Source Camera as itself.
-8. Set the NDIController's main camera to the scene's Main Camera and the NDI camera as the child NDICamera.
+1. In your the NetworkAnchorsExample scene, create a new Empty GameObject, name it NDIController.
+2. Add the NDI Controller component to the object.
+3. Create an empty GameObject as a child of the NDI controller. Name it Root.
+4. Create a new Camera as a child of the Root object. Name it NDICamera.
+5. Set the Camera's Clear Flags to Solid Color, and set the background to Black with zero opacity.
+6. Add the Nndi Sender Component, select Enable Alpha and set the capture method to camera. Set the sender's Source Camera as itself.
+7. Set the NDIController's main camera to the scene's Main Camera and the NDI camera as the child NDICamera.
 
 ### Combine Camera Streams using OBS
 1. Download [OBS](https://obsproject.com/)

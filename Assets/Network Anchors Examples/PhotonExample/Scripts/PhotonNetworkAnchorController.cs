@@ -46,8 +46,12 @@ public class PhotonNetworkAnchorController : MonoBehaviour
         {
             yield return null;
         }
+        //Wait 3 seconds in case something needs to initialize
         yield return new WaitForSeconds(3);
+
         yield return NetworkAnchorService.RequestConnectToService(PhotonNetwork.LocalPlayer.ActorNumber, MultiPlatformCoordinateProvider);
+
+        //Wait 3 seconds in case something needs to initialize
         yield return new WaitForSeconds(3);
 
         if (NetworkAnchorService.IsConnected == false)
@@ -118,6 +122,7 @@ public class PhotonNetworkAnchorController : MonoBehaviour
             NetworkAnchorService.DisconnectFromService(otherPlayer.ActorNumber);
     }
 
+    #region NotUsed
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
     }
@@ -133,6 +138,9 @@ public class PhotonNetworkAnchorController : MonoBehaviour
     public void OnMasterClientSwitched(Player newMasterClient)
     {
     }
+
+    #endregion
+
 #endif
 
 }
