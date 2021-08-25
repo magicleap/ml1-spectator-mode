@@ -8,15 +8,9 @@ public class MultiPlatformCoordinateProvider : MonoBehaviour, IGenericCoordinate
     [Header("Providers")]
     public MLGenericCoordinateProvider MagicLeapProvider;
     public StandaloneCoordinateProvider StandaloneProvider;
- 
+    [SerializeField]
     private bool _forceStandalone;
 
-    void Awake()
-    {
-#if UNITY_EDITOR
-        _forceStandalone = true;
-#endif
-    }
     public Task<List<GenericCoordinateReference>> RequestCoordinateReferences(bool refresh)
     {
 

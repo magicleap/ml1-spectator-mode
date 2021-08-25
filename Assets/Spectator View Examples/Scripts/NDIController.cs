@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-#if PHOTON
-using Photon.Pun;
-#endif
 using UnityEngine;
 
 /// <summary>
@@ -16,13 +13,13 @@ public class NDIController : MonoBehaviour
 
     private Transform _currentTarget;
     private int _currentIndex;
-#if PHOTON
+
     // Update is called once per frame
     void Update()
     {
         NDICamera.gameObject.SetActive(_currentTarget != null);
 
-        if (PhotonNetwork.IsConnectedAndReady)
+        if (NetworkAnchorService.Instance && NetworkAnchorService.Instance.IsConnected)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -40,7 +37,7 @@ public class NDIController : MonoBehaviour
 
     private void CyclePlayers()
     {
-
+#if PHOTON
         var playerRigs = FindObjectsOfType<SimplePhotonUser>();
         if (playerRigs.Length == 0)
             return;
@@ -51,7 +48,8 @@ public class NDIController : MonoBehaviour
 
         _currentTarget = playerRigs[_currentIndex].transform;
         _currentIndex++;
-    }
 #endif
+
+    }
 
 }
