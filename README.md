@@ -33,10 +33,10 @@ The following steps are required create or add a spectator view to your project 
 3) Combine the virtual and physical camera stream using OBS
 
 *Prerequisites:* 
-* Magic Leap Unity SDK / Package
+* Magic Leap Unity SDK / Package -- If you need assistance configuring your Unity project to build to a Magic Leap headset, check out the ["Getting Started In Unity Guide"](https://developer.magicleap.com/en-us/learn/guides/unity-setup-intro). The versions are outdated, but the core steps are the same.
 
 ### Create A Co-Location Network Experience
-This project contains a pre-configured colocation experience. To learn how to create your own. View the com.magicleap.spectator.networkanchors packages [README](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main).
+This project contains a pre-configured co-location experience. To learn how to create your own using our cross-platform network anchor package, view the com.magicleap.spectator.networkanchors [README](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main).
 
 ### Create the Desktop Spectator Client
 We will use the Desktop client to render the Virtual Content. To match the virtual content's position with the external camera, we will create a virtual camera that can follow the network position of the Magic Leap. This guide will use the Photon sample including the NetworkAnchorsExample sample scene from the [NetworkAnchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main) package.
@@ -77,7 +77,10 @@ We will use the Desktop client to render the Virtual Content. To match the virtu
 ![image](https://user-images.githubusercontent.com/38482323/129375444-b2776e51-59b4-49c4-85dc-52c6c05608a2.png)
 16. When you are ready to record the composited video, press Start Recording under the Controls header.
 
-### Troubleshooting NDI stream latency issues:
+## Troubleshooting 
+### Building Demo Project
+* If you get an error about shaders and the Hidden/Spout folder -- just run the project again and it should clear up.
+### NDI stream latency issues:
 If you are experiencing significant delays between the NDI stream and the video stream, try the following steps:
 * Right click on your Video Capture source and select Filters 
 * Under Audio/Video Filters, click the + and select Video Delay (Async)
@@ -88,6 +91,8 @@ If you are experiencing significant delays between the NDI stream and the video 
 If you are still having issues with NDI stream latency, you can try the following:
 * Add a second machine to process the rendering
 * If you are on a Windows computer, you can try the [Spout plugin for Unity](https://github.com/keijiro/KlakSpout).
+
+
 ## Included Packages
 [com.magicleap.spectator.networkanchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors)
 A lightweight tool that enables co-location experiences using a shared anchor.
