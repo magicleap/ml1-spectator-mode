@@ -22,12 +22,6 @@ public class CameraOffset : MonoBehaviour
 #endif
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void GetInput(string offsetValue)
     {
         Debug.Log("Your offset is:"+offsetValue);
@@ -38,10 +32,10 @@ public class CameraOffset : MonoBehaviour
     public void MoveCamera()
     {
         offset = float.Parse(offsetString);
-        Debug.Log(offset);
-        var position = cameraToOffset.transform.position;
-        Debug.Log(position);
-        position = new Vector3(0, 0, 0);
+        Debug.Log("Offsetting the camera by" + offset);
+        //var position = cameraToOffset.transform.position;
+        // Debug.Log(position);
+        var position = new Vector3(0, 0, 0);
         position += new Vector3(0, offset/100, 0);
         cameraToOffset.transform.position = position;
     }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5126998286674117752}
   - component: {fileID: 5126998286674117703}
   m_Layer: 0
-  m_Name: Remote Network Visual
+  m_Name: Active Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5126998286674117702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 5126998287630142874}
   m_RootOrder: 1
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 38f0a584a1f7192469da67af891f3e88, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5126998286937986299}
   - component: {fileID: 5126998286937986298}
   m_Layer: 0
-  m_Name: Local Network Visual
+  m_Name: Default Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 5126998286937986297}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 5126998287630142874}
   m_RootOrder: 0
@@ -155,7 +155,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 664fd1ef5f2cb6d4690a0ac16279150c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,7 +215,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5126998287630142823}
-  m_LocalRotation: {x: -0, y: 0.15723222, z: -0, w: 0.9875617}
+  m_LocalRotation: {x: 0, y: 0.15723601, z: 0, w: 0.9875611}
   m_LocalPosition: {x: 0, y: 0, z: 1.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb90386efdbc6b4b92e48c49d8cc37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerId: 
+  _logNetworkEventCodes: 1
 --- !u!114 &5126998287630142873
 MonoBehaviour:
   m_ObjectHideFlags: 0

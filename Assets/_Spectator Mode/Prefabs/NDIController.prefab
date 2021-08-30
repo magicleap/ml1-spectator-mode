@@ -139,6 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 529833622964560330}
   NDICamera: {fileID: 2390279831498381499}
+  _statusText: {fileID: 0}
+  _log: 1
 --- !u!1 &4582330964838533953
 GameObject:
   m_ObjectHideFlags: 0

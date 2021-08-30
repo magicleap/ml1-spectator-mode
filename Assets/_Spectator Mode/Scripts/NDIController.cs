@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -11,26 +12,44 @@ public class NDIController : MonoBehaviour
     public Transform MainCamera;
     public Transform NDICamera;
 
-    private Transform _currentTarget;
-    private int _currentIndex;
+    public Transform CurrentTarget { get; private set; }
+    public int CurrentIndex { get; private set; }
 
+    [SerializeField] private TMP_Text _statusText;
+    [SerializeField] private bool _log = true;
+
+
+    void Start()
+    {
+        NDICamera.gameObject.SetActive(CurrentTarget != null);
+
+        //Debug Status
+        string status = NDICamera.gameObject.activeInHierarchy ? "Active" : "Disabled";
+        var activationDebug = "The NDI camera is " + status;
+        if (_statusText)
+        {
+            _statusText.text = activationDebug;
+        }
+
+        if (_log)
+        {
+            Debug.Log(activationDebug);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        NDICamera.gameObject.SetActive(_currentTarget != null);
+        NDICamera.gameObject.SetActive(CurrentTarget != null);
 
-        if (NetworkAnchorService.Instance && NetworkAnchorService.Instance.IsConnected)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                CyclePlayers();
-            }
+            CyclePlayers();
+        }
 
-            if (_currentTarget != null)
-            {
-                MainCamera.position = NDICamera.position = _currentTarget.position;
-                MainCamera.rotation = NDICamera.rotation = _currentTarget.rotation;
-            }
+        if (CurrentTarget != null)
+        {
+            MainCamera.position = NDICamera.position = CurrentTarget.position;
+            MainCamera.rotation = NDICamera.rotation = CurrentTarget.rotation;
         }
 
     }
@@ -41,13 +60,44 @@ public class NDIController : MonoBehaviour
         var playerRigs = FindObjectsOfType<SimplePhotonUser>();
         if (playerRigs.Length == 0)
             return;
-        if (playerRigs.Length - 1 < _currentIndex)
+        if (playerRigs.Length - 1 < CurrentIndex)
         {
-            _currentIndex = 0;
+            CurrentIndex = 0;
         }
 
-        _currentTarget = playerRigs[_currentIndex].transform;
-        _currentIndex++;
+        //Debug the status if this is our first target.
+        if (CurrentTarget == null)
+        {
+            var activationStatus = "Activating NDI camera.";
+            if (_statusText)
+            {
+                _statusText.text = activationStatus;
+            }
+
+            if (_log)
+            {
+                Debug.Log(activationStatus);
+            }
+        }
+
+    
+
+        CurrentTarget = playerRigs[CurrentIndex].transform;
+        CurrentIndex++;
+
+        //Debug the current target information 
+        var targetDebug = "Setting current player to: " + CurrentTarget.gameObject.name + " at index " + (CurrentIndex-1);
+        if (_statusText)
+        {
+            _statusText.text = targetDebug;
+        }
+
+        if (_log)
+        {
+            Debug.Log(targetDebug);
+        }
+
+
 #endif
 
     }

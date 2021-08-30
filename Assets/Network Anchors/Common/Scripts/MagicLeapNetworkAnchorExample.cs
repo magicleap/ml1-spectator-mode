@@ -49,6 +49,12 @@ public class MagicLeapNetworkAnchorExample : MonoBehaviour
         if (controller != null && controller.Id == controllerId &&
             button == MLInput.Controller.Button.Bumper)
         {
+
+            //Move the network anchor to our controller
+            NetworkAnchorLocalizer.transform.position = controller.Position;
+            NetworkAnchorLocalizer.transform.rotation = controller.Orientation;
+
+
             // Demonstrate haptics using callbacks.
             NetworkAnchorLocalizer.CreateOrGetAnchor();
             controller.StartFeedbackPatternVibe(MLInput.Controller.FeedbackPatternVibe.ForceDown, MLInput.Controller.FeedbackIntensity.Medium);

@@ -9,7 +9,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine;
 
 /// <summary>
-/// Interfaces with Photon and transmits the information to the Network Anchor Service. Also starts the service.
+/// Sends information from the network anchor service to photon and relays photon messagesthe information to the Network Anchor Service. Also starts the service.
 /// </summary>
 public class PhotonNetworkAnchorController : MonoBehaviour
 #if PHOTON
