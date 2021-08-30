@@ -1,6 +1,6 @@
 # Spectator View
 
-This project demonstrates how to render virtual content using an external camera and a Magic Leap's headset position. In this demo, we use the [magicleap.spectator.networkanchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main) package create a multi-user colocation experience. 
+This project demonstrates how to render virtual content using an external camera and a Magic Leap's headset position. In this demo, we use the [magicleap.spectator.networkanchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main) package to create a multi-user colocation experience. By using this project you will be able to take an external camera, place it above or below the Magic Leap headset, and have the camera feed and Magic Leap virtual content composited together in OBS so anyone watching the stream can see what the users of the co-located experience are seeing.
 
 This readme includes the instructions as well as the technical information required to create custom streaming solutions. Please report any questions or issues using Github’s issue ticketing system.  
 
@@ -27,32 +27,44 @@ This project uses submodules. Use `git clone --recurse-submodules` when cloning.
 - URP / HDRP
 
 ## Getting Started
-The following steps are required create or add a spectator view to your project :
+With a headset and an external camera hooked up to your computer, you can follow the following steps to create or add a spectator view to your project. This guide will use the sample scene under _SpectatorMode/PunSpectatorView, which can be both be built to the headset and run on standalone.
+
 1) Create a co-location network experience.
 2) Use a desktop client to render a virtual camera mapped to the Magic Leap's position.
-3) Combine the virtual and physical camera stream using OBS
+3) Combine the virtual and physical camera streams using OBS.
 
 *Prerequisites:* 
 * Magic Leap Unity SDK / Package -- If you need assistance configuring your Unity project to build to a Magic Leap headset, check out the ["Getting Started In Unity Guide"](https://developer.magicleap.com/en-us/learn/guides/unity-setup-intro). The versions are outdated, but the core steps are the same.
 
 ### Create A Co-Location Network Experience
-This project contains a pre-configured co-location experience. To learn how to create your own using our cross-platform network anchor package, view the com.magicleap.spectator.networkanchors [README](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main).
+The PunSpectatorView scene includes a pre-configured co-location experience. To learn how to create your own using our cross-platform network anchor package, view the com.magicleap.spectator.networkanchors [README](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main).
+
+1. Build the PunSpectatorView scene to your Magic Leap device.
 
 ### Create the Desktop Spectator Client
-We will use the Desktop client to render the Virtual Content. To match the virtual content's position with the external camera, we will create a virtual camera that can follow the network position of the Magic Leap. This guide will use the Photon sample including the NetworkAnchorsExample sample scene from the [NetworkAnchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main) package.
+We will use the Desktop client to render the Virtual Content. To match the virtual content's position with the external camera, we will create a virtual camera that can follow the network position of the Magic Leap. 
 
-1. Duplicate your project folder or switch your project to Standalone and set the Graphic API to the one listed in the [Requirements](requirements) section.
+1. Switch your project to Standalone and set the Graphic API to the one specified by your O.S., listed in the [Requirements](requirements) section.
+2. The sample scene already has the NDI Components needed to stream to OBS, so you can skip the "Create the NDI Rig" section. If you are building your own scene from scratch, follow the next section.
+3. You can now play the scene in standalone within Unity and connect to the headset client by:
+    1. Running the scene in the ML device.
+    2. Playing the scene in Unity -- the console should show you connecting to the Photon room and 2 players being inside it.
+    3. Pressing the bumper on the ML Controller will start the localization process -- the cube in the scene should turn into a sphere, indicating the clients have localized.
+    4. Pressing the "1" key will switch which camera view is being streamed to OBS -- to set up OBS, head to the "Combine Camera Streams Using OBS" section.
 
 #### Create the NDI Rig
-1. In your the NetworkAnchorsExample scene, create a new Empty GameObject, name it NDIController.
+1. In the NetworkAnchorsExample scene, create a new Empty GameObject, name it NDIController.
 2. Add the NDI Controller component to the object.
 3. Create an empty GameObject as a child of the NDI controller. Name it Root.
 4. Create a new Camera as a child of the Root object. Name it NDICamera.
 5. Set the Camera's Clear Flags to Solid Color, and set the background to Black with zero opacity.
-6. Add the Nndi Sender Component, select Enable Alpha and set the capture method to camera. Set the sender's Source Camera as itself.
+6. Add the Ndi Sender Component, select Enable Alpha and set the capture method to camera*. Set the sender's Source Camera as itself.
 7. Set the NDIController's main camera to the scene's Main Camera and the NDI camera as the child NDICamera.
 
+**Note: If using the standard render pipeline, you must instead set the Ndi Sender capture method to "game view". If using URP, you can use "camera", but you must set the NDI Camera's Camera/HDR setting to "Off".*
+
 ### Combine Camera Streams using OBS
+
 1. Download [OBS](https://obsproject.com/)
 2. Install the [OBS NDI plugin](https://github.com/Palakis/obs-ndi/releases/tag/4.9.1)
 3. Inside your OBS project, add a new NDI Source to the scene.  
@@ -61,12 +73,15 @@ We will use the Desktop client to render the Virtual Content. To match the virtu
 4. Add a new video source and select the camera you are using to capture from the headset’s position as the Source Name.  
 5. Make sure your NDI Source is above the Video Source in the scene hierarchy.  
 ![image](https://user-images.githubusercontent.com/38482323/129375076-4c43c47b-e1fd-4835-989f-de7d11e3db28.png)
+
+*If using the sample scene, skip to step 8. If building from scratch, follow 6-7.*
+
 6. Follow the steps listed in the [KlakNDI](https://github.com/keijiro/KlakNDI) repo to add an NDI stream to your Unity project.
 7. Inside your Unity project, make sure that the NDI component has alpha enabled in its NDI Sender Script and the Camera that you are using as your source uses a solid black background with transparent alpha. 
 ![image](https://user-images.githubusercontent.com/38482323/129375993-5a10fdbd-e99b-4c7b-a3d8-9f692c294e13.png)
 
 8. Start the game on the desktop and headsets.
-9. To create or find a network anchor on the Magic Leap Headsets, press the trigger on the controller. On the desktop, select the game and press the spacebar.
+9. To create or find a network anchor on the Magic Leap Headsets, press the bumper on the controller. On the desktop, select the game and press the spacebar. To switch which camera is streaming to OBS, press the "1" key.
 10. Once the client and server Unity applications are connected, select the NDI Source in the Sources panel inside the OBS application.
 11. Select the gear icon to open the NDI's source properties.
 12. Select the drop down arrow near the Sources Name Field.  
@@ -80,6 +95,8 @@ We will use the Desktop client to render the Virtual Content. To match the virtu
 ## Troubleshooting 
 ### Building Demo Project
 * If you get an error about shaders and the Hidden/Spout folder -- just run the project again and it should clear up.
+### NDI Stream not showing as option in OBS
+* Double check the steps in the "Create the NDI Rig" section -- make sure if you're using the standard render pipeline, you set the Ndi Sender capture method to "game view". If using URP, you can use "camera", but you must set the NDI Camera's Camera/HDR setting to "Off".
 ### NDI stream latency issues:
 If you are experiencing significant delays between the NDI stream and the video stream, try the following steps:
 * Right click on your Video Capture source and select Filters 
