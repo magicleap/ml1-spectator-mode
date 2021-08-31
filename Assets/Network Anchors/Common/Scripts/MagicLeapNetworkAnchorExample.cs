@@ -9,6 +9,7 @@ using UnityEngine.XR.Management;
 public class MagicLeapNetworkAnchorExample : MonoBehaviour
 {
     public NetworkAnchorLocalizer NetworkAnchorLocalizer;
+    private bool _didInit;
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +18,8 @@ public class MagicLeapNetworkAnchorExample : MonoBehaviour
         //Check if any XR managers are running. If one is, assume it's magic leap and listen to the bumper input.
         if (XRGeneralSettings.Instance.Manager.isInitializationComplete)
         {
+            _didInit = true;
             MLInput.OnControllerButtonDown += HandleOnButtonDown;
-            Debug.Log("No XR device has been detected. Starting in standalone.");
         }
 #endif
     }
@@ -30,7 +31,8 @@ public class MagicLeapNetworkAnchorExample : MonoBehaviour
     void OnDestroy()
     {
 #if PLATFORM_LUMIN
-        MLInput.OnControllerButtonDown -= HandleOnButtonDown;
+        if(_didInit)
+            MLInput.OnControllerButtonDown -= HandleOnButtonDown;
 #endif
     }
 
