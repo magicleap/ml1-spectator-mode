@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if PLATFORM_LUMIN
 using UnityEngine.XR.MagicLeap;
+using UnityEngine.XR.Management;
+#endif
 
 public class MagicLeapNetworkAnchorExample : MonoBehaviour
 {
@@ -11,7 +14,12 @@ public class MagicLeapNetworkAnchorExample : MonoBehaviour
     void Start()
     {
 #if PLATFORM_LUMIN
-        MLInput.OnControllerButtonDown += HandleOnButtonDown;
+        //Check if any XR managers are running. If one is, assume it's magic leap and listen to the bumper input.
+        if (XRGeneralSettings.Instance.Manager.isInitializationComplete)
+        {
+            MLInput.OnControllerButtonDown += HandleOnButtonDown;
+            Debug.Log("No XR device has been detected. Starting in standalone.");
+        }
 #endif
     }
 
