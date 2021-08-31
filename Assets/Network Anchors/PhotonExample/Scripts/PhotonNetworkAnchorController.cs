@@ -23,6 +23,9 @@ public class PhotonNetworkAnchorController : MonoBehaviour
 #if PHOTON
     private void Awake()
     {
+       
+        PhotonNetwork.AutomaticallySyncScene = false;
+
         PhotonNetwork.NetworkingClient.LoadBalancingPeer.ReuseEventInstance = true;
         NetworkAnchorService.OnBroadcastNetworkEvent += SendNetworkAnchorEvent;
         PhotonNetwork.AddCallbackTarget(this);
