@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if PLATFORM_LUMIN
+//#if PLATFORM_LUMIN
 using UnityEngine.XR.MagicLeap;
 using UnityEngine.XR.Management;
-#endif
+//#endif
 
 public class MagicLeapNetworkAnchorExample : MonoBehaviour
 {

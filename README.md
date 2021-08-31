@@ -2,7 +2,7 @@
 
 This project demonstrates how to render virtual content using an external camera and a Magic Leap's headset position. In this demo, we use the [magicleap.spectator.networkanchors](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main) package to create a multi-user colocation experience. By using this project you will be able to take an external camera, place it above or below the Magic Leap headset, and have the camera feed and Magic Leap virtual content composited together in OBS so anyone watching the stream can see what the users of the co-located experience are seeing.
 
-This readme includes the instructions as well as the technical information required to create custom streaming solutions. Please report any questions or issues using Github’s issue ticketing system.  
+This readme includes the instructions on setting up the demo as well as the technical information required to create custom streaming solutions. Please report any questions or issues using Github’s issue ticketing system.  
 
 **Note**:  
 This project uses submodules. Use `git clone --recurse-submodules` when cloning.
@@ -27,30 +27,31 @@ This project uses submodules. Use `git clone --recurse-submodules` when cloning.
 - URP / HDRP
 
 ## Getting Started
-With a headset and an external camera hooked up to your computer, you can follow the following steps to create or add a spectator view to your project. This guide will use the sample scene under _SpectatorMode/PunSpectatorView, which can be both be built to the headset and run on standalone.
+With a headset and an external camera hooked up to your computer, you can follow the following steps to create or add a spectator view to your project. This guide will use the sample scene under _SpectatorMode/Scenes/PunSpectatorView, which can be both be built to the headset and run on standalone. Together we will:
 
 1) Create a co-location network experience.
 2) Use a desktop client to render a virtual camera mapped to the Magic Leap's position.
 3) Combine the virtual and physical camera streams using OBS.
 
 *Prerequisites:* 
-* Magic Leap Unity SDK / Package -- If you need assistance configuring your Unity project to build to a Magic Leap headset, check out the ["Getting Started In Unity Guide"](https://developer.magicleap.com/en-us/learn/guides/unity-setup-intro). The versions are outdated, but the core steps are the same.
+* Magic Leap Unity SDK / Package -- If you need assistance configuring your Unity project to build to a Magic Leap headset, check out the [Getting Started In Unity Guide](https://developer.magicleap.com/en-us/learn/guides/unity-setup-intro). The versions are outdated, but the core steps are the same.
 
 ### Create A Co-Location Network Experience
 The PunSpectatorView scene includes a pre-configured co-location experience. To learn how to create your own using our cross-platform network anchor package, view the com.magicleap.spectator.networkanchors [README](https://github.com/magicleap/com.magicleap.spectator.networkanchors/tree/main).
 
-1. Build the PunSpectatorView scene to your Magic Leap device.
+1. In addition to the other standard setup steps for Lumin, make sure you change the default certificate location to your personal magic leap certificate folder -- under Project Settings > Player > Lumin > Publishing Settings > ML Certificate.
+2.  Build the PunSpectatorView scene to your Magic Leap device. If the first build fails due to an error with the Spout plugin, run the build again and it should work. This is a bug we will address in a future release.
 
 ### Create the Desktop Spectator Client
 We will use the Desktop client to render the Virtual Content. To match the virtual content's position with the external camera, we will create a virtual camera that can follow the network position of the Magic Leap. 
 
-1. Switch your project to Standalone and set the Graphic API to the one specified by your O.S., listed in the [Requirements](requirements) section.
-2. The sample scene already has the NDI Components needed to stream to OBS, so you can skip the "Create the NDI Rig" section. If you are building your own scene from scratch, follow the next section.
-3. You can now play the scene in standalone within Unity and connect to the headset client by:
+1. Switch your project to Standalone and make sure the Graphics API under Project Settings > Player > Standalone is the one specified by your O.S. listed in the [Requirements](requirements) section.
+2. The sample scene already has the NDI Components needed to stream to OBS, so you can skip the "Create the NDI Rig" section. If you are building your own scene from scratch, follow that section.
+3. You can now connect the scene in standalone Unity and the headset client by:
     1. Running the scene in the ML device.
     2. Playing the scene in Unity -- the console should show you connecting to the Photon room and 2 players being inside it.
-    3. Pressing the bumper on the ML Controller will start the localization process -- the cube in the scene should turn into a sphere, indicating the clients have localized.
-    4. Pressing the "1" key will switch which camera view is being streamed to OBS -- to set up OBS, head to the "Combine Camera Streams Using OBS" section.
+    3. Pressing the bumper on the ML Controller will start the localization process -- the cube in the scene should turn into a sphere at your controller position, indicating the clients have localized. The service status bar should show that the clients have been connected and are now sharing network coordinates.
+    4. Pressing the "1" key on standalone will switch which camera view is being streamed to OBS -- to set up OBS, head to the "Combine Camera Streams Using OBS" section.
 
 #### Create the NDI Rig
 1. In the NetworkAnchorsExample scene, create a new Empty GameObject, name it NDIController.
