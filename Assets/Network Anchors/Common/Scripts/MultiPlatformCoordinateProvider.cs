@@ -21,7 +21,7 @@ public class MultiPlatformCoordinateProvider : MonoBehaviour, IGenericCoordinate
         if (!XRGeneralSettings.Instance.Manager.isInitializationComplete)
         {
             _forceStandalone = true;
-            Debug.Log("Not initialized");
+            Debug.Log("No XR device has been detected. Starting in standalone.");
         }
     }
     public Task<List<GenericCoordinateReference>> RequestCoordinateReferences(bool refresh)
