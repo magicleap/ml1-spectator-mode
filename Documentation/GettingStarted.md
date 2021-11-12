@@ -9,7 +9,7 @@ This guide will cover step one. For step two and three, please read the [Streami
 
 <br/>
 
-## Co-Located Networking Demo Requirements
+## Co-Located Networking Scene Requirements
 
 **Magic Leap**
 - Unity 2020.3.x
@@ -22,8 +22,8 @@ This guide will cover step one. For step two and three, please read the [Streami
 
 <br/>
 
-### Create A Co-Location Network Experience
-In this section we will use Photon and the included Network Anchors package to create a multi-user, co-located experience.
+## Create A Co-Location Network Experience
+In this section we will use Photon and the included Network Anchors package to create a multi-user, co-located scene.
 
 <br/>
 

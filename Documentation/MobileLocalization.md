@@ -5,7 +5,7 @@ By using a shared image target, a Magic Leap headset can share virtual content i
 
 <br/>
 
-### Image Tracking and Mobile Localization Dependencies
+## Image Tracking and Mobile Localization Dependencies
 
 **Magic Leap** 
 - Unity 2020.2 +
@@ -21,7 +21,7 @@ By using a shared image target, a Magic Leap headset can share virtual content i
 
 <br/>
 
-### Setup
+## Setup
 
 The image tracking localization demo uses a shared scene called "MobileLocalizationTest" that is used by all clients, combined with one other scene based on which platform you're building to.
 
@@ -35,9 +35,9 @@ To use your own image, load the image into your Assets folder. Select the image 
 
 Measure the longest side of the image as it will be displayed when used in the co-located experience (i.e. if displaying on a screen, measure it at the exact window/screen size, or if using a printed image, measure the printed size). For our submarine image, the longer dimension is the horizontal side (length), and when displayed full-screen on our laptop, the length is 0.288 meters. Record the measurement **in meters**, you'll need it later.
 
-Then you need to update two components, one for each platform: 
+Next we'll update platform specific components. 
 
-**Magic Leap**
+### Magic Leap Scene Components
 
 Open the MobileLocalizationTest scene. In the hierarchy under PunNetworkAnchorController > MultiPlatformCoordinateProvider > MagicLeapCoordinateProvider, there is a script component called "ML Generic Coordinate Provider"
 - The name field is not important, name it whatever you want.
@@ -45,7 +45,7 @@ Open the MobileLocalizationTest scene. In the hierarchy under PunNetworkAnchorCo
 - Type the measurement you recorded eariler under the "Longer Dimension" field. *Make sure you're typing it in meters.*
 - The other fields don't need to be adjusted by default. The Image Target Visual is the prefab that will be attached to the image to indicate the Magic Leap has detected the image target -- in our case, a small green cube.
 
-**Mobile**
+### Mobile Scene Components
 
 Open the ARFoundation_Rig scene. For ARFoundation's Image Tracking, we need to make an XR Reference Image Library.
 - Right click in our Assets folder and select Create > XR > Reference Image Library. 
@@ -65,7 +65,7 @@ Lastly, make sure you add a scripting define symbol to the Player Settings:
 
 <br/>
 
-### Building to Device
+## Building to Device
 
 **Magic Leap Build Settings**
 - Make sure the MobileLocalizationTest scene and the MagicLeap_Rig scene are both selected, with the MobileLocalizationTest scene above the MagicLeap_Rig scene in priority.
@@ -79,7 +79,7 @@ Lastly, make sure you add a scripting define symbol to the Player Settings:
 
 <br/>
 
-### Running The Scenes
+## Running The Scenes
 
 - Once scenes have been built to all devices, simply open the app on each device, and turn the camera to face the image you have set up. There are different scanning and connection instructions per device:
     - Magic Leap
@@ -93,7 +93,7 @@ Lastly, make sure you add a scripting define symbol to the Player Settings:
 
 <br/>
 
-### Troubleshooting
+## Troubleshooting
 
 - For viewing debug logs on mobile, we recommend using XCode for iOS and Unity's AndroidLogcat for Android.
 - For viewing debug logs on the Magic Leap, you can use The Lab's Device Bridge.
