@@ -146,6 +146,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Android: com.MagicLeap.spectatormode
     Lumin: com.MagicLeap.spectator-mode
     Standalone: com.MagicLeap.spectator-mode
   buildNumber:

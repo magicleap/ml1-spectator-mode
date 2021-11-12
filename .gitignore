@@ -75,3 +75,6 @@ crashlytics-build.properties
 Assets/Plugins/Lumin/Editor/
 Assets/Plugins/Lumin/Editor.meta
 
+#adding this so we don't accidentally commit the network anchors samples
+/[Aa]ssets/Samples/
+/[Aa]ssets/Samples.meta
