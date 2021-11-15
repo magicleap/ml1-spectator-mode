@@ -18,6 +18,8 @@ public class NDIController : MonoBehaviour
     [SerializeField] private TMP_Text _statusText;
     [SerializeField] private bool _log = true;
 
+    [Tooltip("The Tag used to identify player objects")]
+    [SerializeField] private string _playerTag = "Player";
 
     void Start()
     {
@@ -56,8 +58,7 @@ public class NDIController : MonoBehaviour
 
     private void CyclePlayers()
     {
-#if PHOTON
-        var playerRigs = FindObjectsOfType<SimplePhotonUser>();
+        var playerRigs = GameObject.FindGameObjectsWithTag(_playerTag);
         if (playerRigs.Length == 0)
             return;
         if (playerRigs.Length - 1 < CurrentIndex)
@@ -97,8 +98,6 @@ public class NDIController : MonoBehaviour
             Debug.Log(targetDebug);
         }
 
-
-#endif
 
     }
 
