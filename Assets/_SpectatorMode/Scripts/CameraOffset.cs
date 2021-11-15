@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CameraOffset : MonoBehaviour
-
-{
+public class CameraOffset : MonoBehaviour {
 
     public GameObject cameraToOffset;
     public GameObject menu;
@@ -17,8 +15,10 @@ public class CameraOffset : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-#if PLATFORM_LUMIN && !UNITY_EDITOR
+#if (PLATFORM_LUMIN || PLATFORM_IOS || PLATFORM_ANDROID) && !UNITY_EDITOR
         gameObject.SetActive(false);
+#else
+        gameObject.SetActive(true);
 #endif
     }
 

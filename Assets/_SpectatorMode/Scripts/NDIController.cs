@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Klak.Ndi;
 using TMPro;
 using UnityEngine;
 
@@ -16,17 +17,88 @@ public class NDIController : MonoBehaviour
     public int CurrentIndex { get; private set; }
 
     [SerializeField] private TMP_Text _statusText;
-    [SerializeField] private bool _log = true;
 
     [Tooltip("The Tag used to identify player objects")]
     [SerializeField] private string _playerTag = "Player";
 
-    void Start()
-    {
-        NDICamera.gameObject.SetActive(CurrentTarget != null);
+    [Tooltip("The component used to stream the camera image to NDI")]
+    [SerializeField] NdiResources _resources = null;
 
+    [Tooltip("Should the Camera streaming start automatically when the game is launched?")]
+    [SerializeField] private bool _streamOnStart = false;
+
+    [SerializeField] private bool _log = true;
+
+    private bool _isStreaming;
+
+    void Awake()
+    {
+        //Disable the NDI Camera. It will only be enabled on Standalone Devices
+        NDICamera.gameObject.SetActive(false);
+    }
+
+    IEnumerator Start()
+    {
+        LogStatus();
+
+        //Wait for the main camera to load before initializing
+        var waitForFrame = new WaitForEndOfFrame();
+        while (Camera.main == null)
+        {
+            yield return waitForFrame;
+        }
+
+        yield return waitForFrame;
+
+        if (_streamOnStart)
+        {
+            StartStreaming();
+        }
+      
+    }
+
+    public void StartStreaming()
+    {
+        //Only start the stream if we are not already.
+        if(_isStreaming)
+            return;
+
+#if PLATFORM_IOS  // When Streaming from iOS, stream the camera image directly,
+
+        var camera = Camera.main;
+        NdiSender sender = camera.gameObject.AddComponent(typeof(NdiSender)) as NdiSender;
+        sender.SetResources(_resources);
+        sender.ndiName = "Spectator View " + SystemInfo.deviceUniqueIdentifier;
+        sender.keepAlpha = false;
+        sender.captureMethod = CaptureMethod.Camera;
+        sender.sourceCamera = camera;
+
+
+#elif UNITY_STANDALONE || UNITY_EDITOR // When Streaming from Standalone, stream from the NDI camera with alpha
+
+        NDICamera.gameObject.SetActive(true);
+        var camera = NDICamera.GetComponentInChildren<Camera>(true);
+        NdiSender sender = camera.gameObject.AddComponent(typeof(NdiSender)) as NdiSender;
+        sender.SetResources(_resources);
+        sender.ndiName = "Spectator View " + SystemInfo.deviceUniqueIdentifier;
+        sender.keepAlpha = true;
+        sender.captureMethod = CaptureMethod.Camera;
+        sender.sourceCamera = camera;
+        camera.gameObject.SetActive(true);
+
+#else
+        Debug.LogWarning("Streaming is not supported on this device.");
+
+#endif
+        _isStreaming = true;
+        LogStatus();
+
+    }
+
+    private void LogStatus()
+    {
         //Debug Status
-        string status = NDICamera.gameObject.activeInHierarchy ? "Active" : "Disabled";
+        string status = _isStreaming ? "Active" : "Disabled";
         var activationDebug = "The NDI camera is " + status;
         if (_statusText)
         {
@@ -41,10 +113,9 @@ public class NDIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NDICamera.gameObject.SetActive(CurrentTarget != null);
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            StartStreaming();
             CyclePlayers();
         }
 
@@ -80,8 +151,6 @@ public class NDIController : MonoBehaviour
                 Debug.Log(activationStatus);
             }
         }
-
-    
 
         CurrentTarget = playerRigs[CurrentIndex].transform;
         CurrentIndex++;
