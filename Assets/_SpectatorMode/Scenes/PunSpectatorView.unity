@@ -563,12 +563,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfoCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1503098306383170249, guid: cbb845054dc8e634b9132c7181bcc92b, type: 3}
-      propertyPath: m_Text
-      value: "<b>Magic Leap</b>\nPress the <b>Bumper</b> to create an anchor at your
-        controller's position \nor get a remote anchor.\n\n<b>Standalone</b>\nPress
-        the <b>Spacebar</b> to get remote anchor."
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbb845054dc8e634b9132c7181bcc92b, type: 3}
 --- !u!1001 &4886010662454033997
