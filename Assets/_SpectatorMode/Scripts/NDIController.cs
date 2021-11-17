@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-#if !PLATFORM_LUMIN || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR || PLATFORM_IOS
 using Klak.Ndi;
 #endif
 using TMPro;
@@ -22,10 +22,12 @@ public class NDIController : MonoBehaviour
 
     [Tooltip("The Tag used to identify player objects")]
     [SerializeField] private string _playerTag = "Player";
-#if !PLATFORM_LUMIN || UNITY_EDITOR
+
+#if UNITY_STANDALONE || UNITY_EDITOR || PLATFORM_IOS
     [Tooltip("The component used to stream the camera image to NDI")]
     [SerializeField] NdiResources _resources = null;
 #endif
+
     [Tooltip("Should the Camera streaming start automatically when the game is launched?")]
     [SerializeField] private bool _streamOnStart = false;
 
@@ -76,7 +78,7 @@ public class NDIController : MonoBehaviour
         sender.sourceCamera = camera;
 
 
-#elif  !PLATFORM_LUMIN && (UNITY_STANDALONE || UNITY_EDITOR) // When Streaming from Standalone, stream from the NDI camera with alpha
+#elif (UNITY_STANDALONE || UNITY_EDITOR) // When Streaming from Standalone, stream from the NDI camera with alpha
 
         NDICamera.gameObject.SetActive(true);
         var camera = NDICamera.GetComponentInChildren<Camera>(true);
@@ -112,7 +114,7 @@ public class NDIController : MonoBehaviour
             Debug.Log(activationDebug);
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
