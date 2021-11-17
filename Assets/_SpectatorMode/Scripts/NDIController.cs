@@ -74,8 +74,11 @@ public class NDIController : MonoBehaviour
         sender.SetResources(_resources);
         sender.ndiName = "Spectator View " + SystemInfo.deviceUniqueIdentifier;
         sender.keepAlpha = false;
-        sender.captureMethod = CaptureMethod.Camera;
-        sender.sourceCamera = camera;
+        sender.captureMethod = CaptureMethod.GameView;
+        
+        //Only supported in URP or HDRP
+        //sender.captureMethod = CaptureMethod.Camera;
+        // sender.sourceCamera = camera;
 
 
 #elif (UNITY_STANDALONE || UNITY_EDITOR) // When Streaming from Standalone, stream from the NDI camera with alpha
@@ -86,8 +89,11 @@ public class NDIController : MonoBehaviour
         sender.SetResources(_resources);
         sender.ndiName = "Spectator View " + SystemInfo.deviceUniqueIdentifier;
         sender.keepAlpha = true;
-        sender.captureMethod = CaptureMethod.Camera;
-        sender.sourceCamera = camera;
+        sender.captureMethod = CaptureMethod.GameView;
+        
+        //Only supported in URP or HDRP
+        //sender.captureMethod = CaptureMethod.Camera;
+        // sender.sourceCamera = camera;
         camera.gameObject.SetActive(true);
 
 #else
