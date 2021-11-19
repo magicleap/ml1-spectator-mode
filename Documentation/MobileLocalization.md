@@ -7,17 +7,17 @@ By using a shared image target, a Magic Leap headset can share virtual content i
 
 ## Image Tracking and Mobile Localization Dependencies
 
-**Magic Leap** 
+**Overall**
 - Unity 2020.2 +
-- Lumin SDK 0.25.0+
-- Photon
+- Photon Networking API Key
 - MagicLeap.Spectator.NetworkAnchors
 
+**Magic Leap** 
+- Lumin SDK 0.26.0+
+
 **Mobile (iOS and Android)**
-- Unity 2020.2 +
 - ARFoundation 4.1.7 +
-- Photon
-- MagicLeap.Spectator.NetworkAnchors
+- ARKit and/or ARCore Unity XR Plug-ins
 
 <br/>
 
@@ -59,22 +59,26 @@ Then, in the hierarchy under ---AR Foundations--- > AR Session Origin, there is 
 - Select the XR Reference Image Library we created in the "Serialized Library" Field.
 - The other fields don't need to be adjusted by default. The Tracked Image Prefab is the prefab that will be attached to the image to indicate the Magic Leap has detected the image target (small green cube).
 
-Lastly, make sure you add a scripting define symbol to the Player Settings:
-- Go to Project Settings > Player > (Android or iOS, depending on which device you're building to) > Other Settings > Scripting Define Symbols.
-- Add a new input field by clicking the plus symbol, and type "AR_FOUNDATION".
+Lastly, make sure you adjust the following in Player Settings:
+- Go to Project Settings > Player > (Android or iOS, depending on which device you're building to) > Other Settings > Scripting Define Symbols. Add a new input field by clicking the plus symbol, and type "AR_FOUNDATION".
+- If using iOS (Player Settings > iOS > Other Setttings):
+    - Add a "Camera Usage Description" -- such as "Camera Needed for AR".
 
 <br/>
 
 ## Building to Device
 
+**Overall**
+- Add the MobileLocalizationTest, MagicLeap_Rig, and ARFoundation_Rig scenes to the Build Settings > Scenes in Build section. Make sure MobileLocalizationTest is at the top. It's okay to have all three enabled for build regardless of platform.
+
 **Magic Leap Build Settings**
-- Make sure the MobileLocalizationTest scene and the MagicLeap_Rig scene are both selected, with the MobileLocalizationTest scene above the MagicLeap_Rig scene in priority.
+- Switch the build platform to **Lumin**
 - In Project Settings > Magic Leap > Manifest Settings > Reality, make sure "Camera Capture" privilege is enabled.
-- The other build settings are the same as the previous demos in this project.
+- Click **Build**.
 
 **Mobile Build Settings**
-- Select the appropriate build platform (iOS or Android).
-- Make sure the MobileLocalizationTest scene and the ARFoundation_Rig scene are both selected, with the MobileLocalizationTest scene above the ARFoundation_Rig scene in priority.
+- Switch to the appropriate build platform (iOS or Android).
+- Click **Build**.
 - For more detailed instructions on building to mobile phones, [this guide has a good walkthrough for each platform](https://www.raywenderlich.com/14808876-ar-foundation-in-unity-getting-started).
 
 <br/>
@@ -95,9 +99,14 @@ Lastly, make sure you add a scripting define symbol to the Player Settings:
 
 ## Troubleshooting
 
-- For viewing debug logs on mobile, we recommend using XCode for iOS and Unity's AndroidLogcat for Android.
-- For viewing debug logs on the Magic Leap, you can use The Lab's Device Bridge.
-- If your Magic Leap is having trouble syncing the network anchors, your device may not have access to multi-user PCFs, which are needed to anchor the network coordinates. Make sure when you start the Magic Leap, it has recognized your playspace or that you rescan the room. If your debug logs say "0 Multi PCFs found" when creating a network anchor, this is likely the issue.
-- If clients have detected the image successfully, but don't appear in each other's scenes, you might need to restart the app. Sometimes Photon doesn't place users in the same networked room if the clients open the app at the same time.
-- If the prefabs aren't showing up on the image, you may not be detecting the image -- make sure the lighting is sufficient and that you aren't too close or too far from the image.
-- If the prefab is not in the center of the image (too close or too far), make sure you've input the correct image measurements. A cube that is too close means the inputed measurement is smaller than the physical dimension, and too far means it is larger than the actual size.
+- For viewing **debug logs**
+    - On mobile, we recommend using XCode for iOS and Unity's AndroidLogcat for Android.
+    - On the Magic Leap, you can use The Lab's Device Bridge.
+- If your **Magic Leap is having trouble syncing the network anchors**
+    - Your device may not have access to multi-user PCFs, which are needed to anchor the network coordinates. Make sure when you start the Magic Leap, it has recognized your playspace or that you rescan the room. If your debug logs say "0 Multi PCFs found" when creating a network anchor, this is likely the issue.
+- If clients have detected the image successfully, but **don't appear in each other's scenes**
+    - You might need to restart the app. Sometimes Photon doesn't place users in the same networked room if the clients open the app at the same time.
+- If the **prefabs aren't showing up on the image**
+    - You may not be detecting the image -- make sure the lighting is sufficient and that you aren't too close or too far from the image.
+- If the **prefab is not in the center of the image** (too close or too far)
+    - Make sure you've input the correct image measurements. A cube that is too close means the inputed measurement is smaller than the physical dimension, and too far means it is larger than the actual size.

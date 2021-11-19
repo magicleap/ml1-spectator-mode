@@ -36,7 +36,8 @@ This readme includes the instructions on setting up the demo as well as the tech
 
 **Mobile (iOS and Android)**
 - Device that is compatable with ARFoundation 4.1.7 +
-- [Image Target](/Assets/Samples/Network Anchors/1.1.0/Examples/ImageTracking/ImageTarget/MLImage_Submarine.png)
+- ARFoundation 4.1.7 + and relevant Unity XR Plugins (ARCore for Android, ARKit for iOS)
+- An image target -- a sample image is provided in the [Mobile Localization Walkthrough](./Documentation/MobileLocalization.md)
 
 <br/>
 
@@ -89,3 +90,10 @@ Keijiro’s Klak NDI package to preform the NDI to OBS streaming. The package it
 
 [Photon 2 Unity Networking](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922)
 This project uses the Photon Unity Networking to manage the network logic.
+
+
+## Overall Troubleshooting
+
+***Note:** For NDI/OBS specific troubleshooting, reference the [Streaming Guide](./Documentation/StreamingGuide.md)* 
+
+- If you get errors when first opening the project that reference issues with the KlakNDI, System.Memory, or System.Buffers packages, these should resolve themselves if you close and re-open the project.

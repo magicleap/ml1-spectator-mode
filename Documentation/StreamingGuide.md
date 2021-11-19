@@ -2,8 +2,6 @@
 
 This guide includes the steps required to retreve the streamed image from the Desktop and iOS client apps using OBS.
 
-[toc]
-
 <br/>
 
 ## Combine Camera Streams using OBS
@@ -22,9 +20,11 @@ This guide includes the steps required to retreve the streamed image from the De
 ### Start Streaming
 
 1. Start the game on the desktop and headsets.
-2. To create or find a network anchor on the Magic Leap Headsets, press the trigger on the controller. 
-3. To begin streaming press on desktop press the "1" key on your keyboard, this will also cylce through the players.
-4. To stream on your iOS device, press the start sreaming button on the screen.
+2. To create or find a network anchor on the Magic Leap headsets, press the trigger on the controller. 
+3. To begin streaming press on desktop press the "1" key on your keyboard, this will also cycle through the players.
+4. To stream on your iOS device, press the start streaming button on the screen.
+
+***Note:** NDI Streaming can start automatically from desktop or iOS devices by enabling the `_streamOnStart` condition on the NDIController. The default value is set to false to in case the user wants to view the AR content in real-time without saving the video.*
 
 ### Adjusting the Bandwidth
 
@@ -50,6 +50,7 @@ If you are experiencing significant delays between the NDI stream and the video 
 
 NDI Stream not showing as option in OBS:
 * Double check the steps in the "Create the NDI Rig" section -- make sure if you're using the standard render pipeline, you set the NDI Sender capture method to "game view". If using URP, you can use "camera", but you must set the NDI Camera's Camera/HDR setting to "Off".
+* If attempting to stream from iOS, make sure the project is using URP or HDRP.
 
 If you are still having issues with NDI stream latency, you can try the following:
 * Add a second machine to process the rendering.
