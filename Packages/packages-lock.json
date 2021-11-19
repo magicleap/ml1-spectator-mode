@@ -24,6 +24,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.editorcoroutines": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
@@ -50,6 +57,13 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
+      "version": "1.2.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mobile.android-logcat": {
       "version": "1.2.3",
       "depth": 0,
       "source": "registry",
@@ -113,6 +127,38 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.xr.arcore": {
+      "version": "4.1.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.xr.arsubsystems": "4.1.7",
+        "com.unity.xr.management": "4.0.1",
+        "com.unity.modules.androidjni": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.xr.arfoundation": {
+      "version": "4.1.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.xr.arsubsystems": "4.1.7",
+        "com.unity.xr.management": "4.0.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.xr.arkit": {
+      "version": "4.1.7",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0",
+        "com.unity.xr.arsubsystems": "4.1.7",
+        "com.unity.xr.management": "4.0.1"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.xr.arsubsystems": {
       "version": "4.1.7",
       "depth": 1,
@@ -170,48 +216,42 @@
       "url": "https://packages.unity.com"
     },
     "jp.keijiro.klak.ndi": {
-      "version": "file:jp.keijiro.klak.ndi@1.0.12",
+      "version": "2.0.2",
       "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
-        "com.unity.modules.screencapture": "1.0.0",
-        "org.nuget.system.memory": "4.5.3"
-      }
-    },
-    "jp.keijiro.klak.spout": {
-      "version": "file:jp.keijiro.klak.spout@1.0.1",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
+        "com.unity.modules.screencapture": "1.0.0"
+      },
+      "url": "https://registry.npmjs.com"
     },
     "org.nuget.system.buffers": {
-      "version": "4.4.0",
-      "depth": 2,
+      "version": "4.5.1",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://unitynuget-registry.azurewebsites.net"
     },
     "org.nuget.system.memory": {
-      "version": "4.5.3",
-      "depth": 1,
+      "version": "4.5.4",
+      "depth": 0,
       "source": "registry",
       "dependencies": {
-        "org.nuget.system.buffers": "4.4.0",
+        "org.nuget.system.buffers": "4.5.1",
         "org.nuget.system.numerics.vectors": "4.4.0",
-        "org.nuget.system.runtime.compilerservices.unsafe": "4.5.2"
+        "org.nuget.system.runtime.compilerservices.unsafe": "4.5.3"
       },
       "url": "https://unitynuget-registry.azurewebsites.net"
     },
     "org.nuget.system.numerics.vectors": {
       "version": "4.4.0",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://unitynuget-registry.azurewebsites.net"
     },
     "org.nuget.system.runtime.compilerservices.unsafe": {
-      "version": "4.5.2",
-      "depth": 2,
+      "version": "4.5.3",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://unitynuget-registry.azurewebsites.net"
