@@ -429,8 +429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e138da487c2bb45a794169332b1348a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MagicLeapRigSceneName: MagicLeap_Rig
-  ARFoundationRigSceneName: ARFoundation_Rig
+  MagicLeapRigSceneName: MagicLeap_Spectator_Rig
+  ARFoundationRigSceneName: ARFoundation_Spectator_Rig
   OnSceneLoaded:
     m_PersistentCalls:
       m_Calls:
