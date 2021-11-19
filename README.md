@@ -37,7 +37,7 @@ This readme includes the instructions on setting up the demo as well as the tech
 **Mobile (iOS and Android)**
 - Device that is compatable with ARFoundation 4.1.7 +
 - ARFoundation 4.1.7 + and relevant Unity XR Plugins (ARCore for Android, ARKit for iOS)
-- An image target -- a sample image is provided in the [Mobile Localization Walkthrough](./Documentation/MobileLocalization.md)
+- An image target ([sample image](./Documentation/submarine.png)).
 
 <br/>
 
@@ -48,14 +48,14 @@ Clone this repository and be sure to include the following flag to also get the 
   git clone --recurse-submodules <spectator-mode repo url>
   ```
 
-Check out the [Documentation](https://github.com/magicleap/spectator-mode/tree/main/Documentation) directory for detailed walkthrough guides on enabling and integrating Spectator Mode features:
-- [Running The Demo Spectator Mode Scene](https://github.com/magicleap/spectator-mode/Documentation/SpectatorModeDemoScene.md)
+Check out the [Documentation](./Documentation) directory for detailed walkthrough guides on enabling and integrating Spectator Mode features:
+- [Running The Demo Spectator Mode Scene](./Documentation/SpectatorModeDemoScene.md)
     - Steps to run our pre-built Photon and NDI scene on Magic Leap and Standalone.
-- [Basic Setup and Getting Started with Photon](https://github.com/magicleap/spectator-mode/Documentation/GettingStarted.md)
+- [Basic Setup and Getting Started with Photon](./Documentation/GettingStarted.md)
     -  Project set up and basic scene using Photon Networking to create a co-located Unity experience.
-- [Streaming with NDI and OBS](https://github.com/magicleap/spectator-mode/Documentation/StreamingGuide.md)
+- [Streaming with NDI and OBS](./Documentation/StreamingGuide.md)
     - Creating necessary NDI streaming compnents in unity scene and combining the camera streams using OBS.
-- [Image Tracking Mobile Localization](https://github.com/magicleap/spectator-mode/Documentation/MobileLocalization.md)
+- [Image Tracking Mobile Localization](./Documentation/MobileLocalization.md)
     - Sharing co-located content between the Magic Leap and a mobile phone (iOS or Android) by scanning an image target to create a cross-platform network anchor.
 
 <br/>
