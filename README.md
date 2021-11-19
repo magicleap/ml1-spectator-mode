@@ -96,4 +96,6 @@ This project uses the Photon Unity Networking to manage the network logic.
 
 ***Note:** For NDI/OBS specific troubleshooting, reference the [Streaming Guide](./Documentation/StreamingGuide.md)* 
 
+***Note:** For Mobile Localization specific troubleshooting, reference the [MobileLocalization Guide](./Documentation/MobileLocalization.md)* 
+
 - If you get errors when first opening the project that reference issues with the KlakNDI, System.Memory, or System.Buffers packages, these should resolve themselves if you close and re-open the project.

@@ -1,8 +1,10 @@
+
 # Mobile Localization
 ### Co-located Shared Experiences between Magic Leap devices and mobile phones running iOS or Android.
 
-By using a shared image target, a Magic Leap headset can share virtual content in a co-located experience with any modern smartphone thanks to Unity's ARFoundation and our Network Anchors package. A platform-specific scene is built to each device, and by scanning the same image in the same physical location, all devices can share networked coordinates. In this scene, the only shared content is a central object that turns from a cube to a sphere when network coordinates have been successfully localized, and a sphere over each device that follows the devices position.
+By using a shared image target, a Magic Leap headset can share virtual content in a co-located experience with any modern smartphone thanks to Unity's ARFoundation and our Network Anchors package. A platform-specific scene is built to each device, and by scanning the same image in the same physical location, all devices can share networked coordinates.
 
+This package includes an example in which the only shared content is a central object that turns from a cube to a sphere when network coordinates have been successfully localized, and a sphere over each device that follows the devices position.
 <br/>
 
 ## Image Tracking and Mobile Localization Dependencies
@@ -10,7 +12,6 @@ By using a shared image target, a Magic Leap headset can share virtual content i
 **Overall**
 - Unity 2020.2 +
 - Photon Networking API Key
-- MagicLeap.Spectator.NetworkAnchors
 
 **Magic Leap** 
 - Lumin SDK 0.26.0+
@@ -21,11 +22,30 @@ By using a shared image target, a Magic Leap headset can share virtual content i
 
 <br/>
 
-## Setup
+## Enable Mobile & AR Foundation Components
+
+For the Network Anchor to support mobile devices, Install AR Foundation's from the package manager and enable AR Core and AR Kit in the XR Manager.
+
+To install the required packages:
+1. Open the Package Manager (Window>Package Manager)
+2. Search and Select the AR Foundation package. Then click Install.
+3. Install the ARCore XR Plugin and ARKit XR Plugin packages as well.
+
+To enable ARCore and ARKit:
+ 1. Open the Project Settings window (Edit>Project Settings)
+ 2. Select XR Plugin Management
+ 3. Make sure ARCore is enabled under Android and ARKit is enabled under iOS.
+
+To enable the AR Foundation components inside the Network Anchors Package:
+1 Go to Project Settings > Player > (Android or iOS, depending on which device you're building to) > Other Settings > Scripting Define Symbols. Add a new input field by clicking the plus symbol, and type "AR_FOUNDATION".
+2 If using iOS (Player Settings > iOS > Other Setttings) Add a "Camera Usage Description"  (ex: "Camera Needed for AR").
+
+## Building the Example
 
 The image tracking localization demo uses a shared scene called "MobileLocalizationTest" that is used by all clients, combined with one other scene based on which platform you're building to.
 
-The MobileLocalizationTest scene can be adjusted to use any image target you choose, though reference the [Magic Leap image target page](https://developer.magicleap.com/en-us/learn/guides/lumin-sdk-image-tracking) to choose a reliable image. We'll be using the submarine image from that page:
+### Adjusting the Target's Texture or Size
+The MobileLocalizationTest scene can be adjusted to use any image target you choose. Reference the [Magic Leap image target page](https://developer.magicleap.com/en-us/learn/guides/lumin-sdk-image-tracking) to choose a reliable image. We'll be using the submarine image from that page:
 
 ![Magic Leap Submarine image target](submarine.png)
 
@@ -37,51 +57,32 @@ Measure the longest side of the image as it will be displayed when used in the c
 
 Next we'll update platform specific components. 
 
-### Magic Leap Scene Components
+#### Magic Leap 
 
 Open the MobileLocalizationTest scene. In the hierarchy under PunNetworkAnchorController > MultiPlatformCoordinateProvider > MagicLeapCoordinateProvider, there is a script component called "ML Generic Coordinate Provider"
-- The name field is not important, name it whatever you want.
-- Select the image you uploaded under the "Image" field in the inspector.
 - Type the measurement you recorded eariler under the "Longer Dimension" field. *Make sure you're typing it in meters.*
+- If you want to change the image target, select the image you uploaded under the "Image" field in the inspector.
 - The other fields don't need to be adjusted by default. The Image Target Visual is the prefab that will be attached to the image to indicate the Magic Leap has detected the image target -- in our case, a small green cube.
 
-### Mobile Scene Components
 
-Open the ARFoundation_Rig scene. For ARFoundation's Image Tracking, we need to make an XR Reference Image Library.
-- Right click in our Assets folder and select Create > XR > Reference Image Library. 
-- Then, in the inspector of the newly created Library, select "Add Image". 
-- Select the image you uploaded in the "Texture 2D" field.
-- Name the image whatever you want.
-- Select "Specify Size" and enter the measurement you recorded earlier under the appropriate dimension (i.e. our submarine, the X size is 0.288 meters). The other dimension should scale accordingly.
-- Select "Keep Texture at Runtime".
+#### Mobile
     
-Then, in the hierarchy under ---AR Foundations--- > AR Session Origin, there is a script component called "AR Tracked Image Manager". 
-- Select the XR Reference Image Library we created in the "Serialized Library" Field.
-- The other fields don't need to be adjusted by default. The Tracked Image Prefab is the prefab that will be attached to the image to indicate the Magic Leap has detected the image target (small green cube).
+The texture and size of the target can be manipulated through the XR Reference Image Library asset. 
+1. Select the Reference Image Library under `Samples\Network Anchors\1.1.0\Examples\ImageTracking\ImageTarget`
+   - To change the targets texture,
+      1.  Remove the existing target 
+      2.  Select Add Image.
+      3.  Select the image you uploaded in the "Texture 2D" field.
+      4.  Name the image whatever you want.
+   -  To change the size of the target 
+       1. Select "Specify Size" and enter the measurement you recorded earlier under the appropriate dimension (i.e. our submarine, the X size is 0.288 meters). 
 
-Lastly, make sure you adjust the following in Player Settings:
-- Go to Project Settings > Player > (Android or iOS, depending on which device you're building to) > Other Settings > Scripting Define Symbols. Add a new input field by clicking the plus symbol, and type "AR_FOUNDATION".
-- If using iOS (Player Settings > iOS > Other Setttings):
-    - Add a "Camera Usage Description" -- such as "Camera Needed for AR".
+To change the Reference Image Library
+2. Open The AR_Foundation_Rig scene.
+3. Select the AR Session Origin object from the hierarchy ( AR Foundations > AR Session Origin)
+4. Set the prefered XR Reference Image Library asset in the AR Tracked Image Manager component.
+ - The other fields don't need to be adjusted by default. The Tracked Image Prefab is the prefab that will be attached to the image to indicate the Magic Leap has detected the image target (small green cube).
 
-<br/>
-
-## Building to Device
-
-**Overall**
-- Add the MobileLocalizationTest, MagicLeap_Rig, and ARFoundation_Rig scenes to the Build Settings > Scenes in Build section. Make sure MobileLocalizationTest is at the top. It's okay to have all three enabled for build regardless of platform.
-
-**Magic Leap Build Settings**
-- Switch the build platform to **Lumin**
-- In Project Settings > Magic Leap > Manifest Settings > Reality, make sure "Camera Capture" privilege is enabled.
-- Click **Build**.
-
-**Mobile Build Settings**
-- Switch to the appropriate build platform (iOS or Android).
-- Click **Build**.
-- For more detailed instructions on building to mobile phones, [this guide has a good walkthrough for each platform](https://www.raywenderlich.com/14808876-ar-foundation-in-unity-getting-started).
-
-<br/>
 
 ## Running The Scenes
 
@@ -91,7 +92,7 @@ Lastly, make sure you adjust the following in Player Settings:
         - Pressing the bumper after scanning the image will send your localized coordinates to the other clients in your room. The cube in the center should turn into a sphere, indicating a successful localization.
     - Mobile
         - The phone will automatically and constantly scan for image targets. Simply point the camera at the image target and the green cube prefab should appear in the center of the image. If the cube starts to drift, simply look at the image again to recenter it.
-        - Once you've scanned the image, press the "Create Anchor" button to send your localized coordinates to theother clients in your room. The cube in the center should turn into a sphere, indicating a successful localization.
+        - Once you've scanned the image, press the "Create Anchor" button to send your localized coordinates to the other clients in your room. The cube in the center should turn into a sphere, indicating a successful localization.
 - Photon should automatically connect all clients in a networked room. Before images have been scanned and network anchors sent, you may see the other clients' spheres in incorrect positions. Once all clients detect the image and create their shared network anchor, the sphere positions should be updated correctly.
 - Once all devices have connected, detected the image, and a shared anchor has been created, clients should be able to see a sphere following each device's location, indicating the network coordinates have been synced successfully. 
 
@@ -109,4 +110,4 @@ Lastly, make sure you adjust the following in Player Settings:
 - If the **prefabs aren't showing up on the image**
     - You may not be detecting the image -- make sure the lighting is sufficient and that you aren't too close or too far from the image.
 - If the **prefab is not in the center of the image** (too close or too far)
-    - Make sure you've input the correct image measurements. A cube that is too close means the inputed measurement is smaller than the physical dimension, and too far means it is larger than the actual size.
+    - Make sure you've input the correct image measurements. A cube that is too close means the inputted measurement is smaller than the physical dimension, and too far means it is larger than the actual size.

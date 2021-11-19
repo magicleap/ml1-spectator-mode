@@ -1,3 +1,4 @@
+
 # Running the Demo Scene
 
 This guide provides the steps to setup and run the example project. The demo scene is located at **Assets/_SpectatorMode/Scenes/PunSpectatorView**.
@@ -37,7 +38,7 @@ This guide provides the steps to setup and run the example project. The demo sce
 
 ### iOS
 1. This project uses KlakNDI to stream, iOS requires the  NDI Advanced SDK to build on Xcode. Please download and install the [NDI Advanced SDK](https://www.ndi.tv/sdk/#download) for iOS in advance of building.
-2. Ensure you've downloaded the ARKit Package and selected it under Player Settings > XR Plug-in Managment.
+2. Ensure you've downloaded the ARKit Package and selected it under Player Settings > XR Plug-in Management.
 3. Make sure your player settings are set to: 
     * iOS: arm64, Metal
     * iOS > Other Settings > Camera Usage Description: "Camera Needed for AR"
@@ -49,7 +50,7 @@ This guide provides the steps to setup and run the example project. The demo sce
 
 ### Android
 **Note: Android does not support streaming through NDI**
-1. Ensure you've downloaded the ARCore Package and selected it under Player Settings > XR Plug-in Managment.
+1. Ensure you've downloaded the ARCore Package and selected it under Player Settings > XR Plug-in Management.
 2. Open the **Build Settings** Window.
 3. If you are not targeting Lumin already, select **Android** from the **Platform** list, then **Switch Platform** .
 4. Make sure that at least the **PunSpectatorView** and **ARFoundation_Spectator_Rig**scenes are listed and enabled. 
@@ -61,4 +62,4 @@ This guide provides the steps to setup and run the example project. The demo sce
 The ARFoundation_Spectator_Rig scene contains an occlusion manager under ---AR Foundations--- > ARSessionOrigin > ARCamera > AR Occlusion Manager. By default this will hide the scene content if it is behind/blocked by physical objects. If you can't see the UI panel in the scenes, toggle "Occlusion" off in-app -- the panel might just be hiding behind an object.
 
 ## Using OBS
-To learn how to retreve the streamed image, view our [Streaming Guide](./StreamingGuide.md)
+To learn how to retrieve the streamed image, view our [Streaming Guide](./StreamingGuide.md)
