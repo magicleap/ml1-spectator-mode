@@ -1,49 +1,59 @@
-# Spectator Mode Demo Scene
+# Running the Demo Scene
 
-This demo allows you to take an external camera, place it above or below the Magic Leap headset, and have the camera feed and Magic Leap virtual content composited together in OBS so anyone watching the stream can see what the users of the co-located experience are seeing.
+This guide provides the steps to setup and run the example project. 
 
-This walkthrough is just for getting the inlcuded demo scene running on Magic Leap and Standalone. For information on how to create a custom scene, reference the guides on our [co-located networking](https://github.com/magicleap/spectator-mode/Documentation/GettingStarted.md) and NDI stream[](https://github.com/magicleap/spectator-mode/Documentation/StreamingGuide.md) features.
+[toc]
 
-The demo scene is located at **Assets/_SpectatorMode/Scenes/PunSpectatorView**.
 
-<br/>
+## Photon Setup
 
-## Demo Scene Requirements
-**Desktop & Magic Leap**
-- Unity 2020.3.x
-- Photon
-- com.magicleap.spectator.networkanchors
+1. Open the photon server settings by selecting **Window > PUN Wizard**
+2. Select **Setup Project** from the **Pun Wizard** window.
+3. Configure your project to use your Photon App Id or an on premise server.
 
-**Magic Leap** 
-- Lumin SDK 0.25.0+
-- Magic Leap Unity SDK / Package
+## Image Target Setup
 
-**Standalone Client  (NDI Streaming)**
-- Windows: D3D11 or D3D12 
-- macOS: Metal required
-- Linux: Vulkan required
-- KlakNDI and System.Memory
-- Camera
-***Note:** Any external camera that can be used in OBS can be used as the composite feed. Anything from a simple webcam to a fancy camera rig will work.*
+1. To localize with Mobile devices, you will need to print out the [Image Target](/Assets/Samples/Network Anchors/1.1.0/Examples/ImageTracking/ImageTarget/MLImage_Submarine.png)
+2. For the target to track correctly, the image size needs to be adjusted. The default is based on the standard size when printed on US printer paper (0.288 x 0.2036 meters). To adjust the size:
+    1. Select the **ARFReferenceImageLibrary** asset ( `Assets/Samples/NetworkAnchors/1.1.0/Examples/ImageTracking/ImageTarget`)
+    1. Change the **Physical Size (meters)** in the inspector to your prefered size.
+    1. Open the **PunSpecatorView** scene located under `_SpecatorMode/Scenes/`
+    1. Select the search for the **MagicLeapCoordinateProvider** object in the Hierarchy and select it. Expand the **Target Info** section in the inspector and set the **Longer Dimension** (meters) value
 
-<br/>
+## Build and Run
 
-## Configuration
+### Magic Leap
+1. Open the **Build Settings** Window
+2. If you are not targeting Lumin already, select **Lumin** from the **Platform** list, then **Switch Platform** 
+2. Make sure that at least the **PunSpectatorView** and **MagicLeap_Spectator_Rig** scenes are listed and enabled. 
+3. Press **Build**
 
-If your Unity editor is not already configured for Magic Leap projects, check out the ["Getting Started In Unity Guide"](https://developer.magicleap.com/en-us/learn/guides/unity-setup-intro) for help downloading the SDK and adjusting your project settings.
+### Desktop
+1. Make sure your player settings are set to: 
+    * Windows: x64 - D3D11/D3D12
+    * macOS: x64 or arm64 (M1), Metal
+    * Linux: x64, Vulkan
+1. Open the **Build Settings** Window
+2. If you are not targeting Lumin already, select **PC, Mac & Standalone** from the **Platform** list, then **Switch Platform** 
+2. Make sure that at least the **PunSpectatorView** and **MagicLeap_Spectator_Rig** scenes are listed and enabled. 
+3. Press **Build**
 
-For the other Spectator Mode project requirements, follow the download guide on the main [README](https://github.com/magicleap/spectator-mode).
+### iOS
+1. This project uses KlakNDI to stream, iOS requires the  NDI Advanced SDK to build on Xcode. Please download and install the [NDI Advanced SDK](https://www.ndi.tv/sdk/#download) for iOS in advance of building.
+1. Make sure your player settings are set to: 
+    * iOS: arm64, Metal
+1. Open the **Build Settings** Window
+2. If you are not targeting Lumin already, select **iOS** from the **Platform** list, then **Switch Platform** 
+2. Make sure that at least the **PunSpectatorView** and **ARFoundation_Spectator_Rig** scenes are listed and enabled. 
+3. Press **Build**
 
-<br/>
+### Android
+**Note: Android does not support streaming through NDI**
+1. Open the **Build Settings** Window
+2. If you are not targeting Lumin already, select **Android** from the **Platform** list, then **Switch Platform** 
+2. Make sure that at least the **PunSpectatorView** and **ARFoundation_Spectator_Rig**scenes are listed and enabled. 
+3. Press **Build**
 
-## Running on Magic Leap and Standalone
 
-***Note:** This guide does not yet include instructions on how to mount an external camera above or below the Magic Leap headset. For demo purposes, we're using a static camera on the standalone client to test the OBS stream.*
-
-1. Build the PunSpectatorView scene to the Magic Leap device(s), following the standard Lumin build settings.
-2. You can now switch to Standalone within Unity and connect to the headset client by:
-    1. Running the built scene in the ML device.
-    2. Playing the scene in Unity -- the console should show you connecting to the Photon room and 2 players being inside it.
-3. Pressing the bumper on the ML Controller will start the localization process -- the cube in the scene should turn into a sphere, indicating the clients have localized.
-4. Pressing the "1" key will switch which camera view is being streamed to OBS -- to set up OBS, head to the "Combine Camera Streams Using OBS" section of the [Streaming Guide](https://github.com/magicleap/spectator-mode/Documentation/StreamingGuide.md).
-
+## Using OBS
+To learn how to retreve the streamed image, view our [Streaming Guide](./StreamingGuide.md)

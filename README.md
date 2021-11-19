@@ -19,28 +19,24 @@ This readme includes the instructions on setting up the demo as well as the tech
 <br/>
 
 ## Requirements  
-**Desktop & Magic Leap**
+**All Platforms**
 - Unity 2020.3.x
-- Photon
-- com.magicleap.spectator.networkanchors
+- Photon Networking API Key
+- .NET Standard 2.0 profile 
 
 **Magic Leap** 
-- Lumin SDK 0.25.0+
-- Magic Leap Unity SDK / Package
+- Lumin SDK 0.26.0+
 
 **Standalone Client  (NDI Streaming)**
 - Windows: D3D11 or D3D12 
 - macOS: Metal required
 - Linux: Vulkan required
-- KlakNDI and System.Memory
-- Camera
+- External Camera
 ***Note:** Any external camera that can be used in OBS can be used as the composite feed. Anything from a simple webcam to a fancy camera rig will work.*
 
-**Mobile -- iOS and Android (Image Target Localization)**
-- Unity 2020.2 +
-- ARFoundation 4.1.7 +
-- Photon
-- MagicLeap.Spectator.NetworkAnchors
+**Mobile (iOS and Android)**
+- Device that is compatable with ARFoundation 4.1.7 +
+- [Image Target](/Assets/Samples/Network Anchors/1.1.0/Examples/ImageTracking/ImageTarget/MLImage_Submarine.png)
 
 <br/>
 
@@ -48,18 +44,16 @@ This readme includes the instructions on setting up the demo as well as the tech
 
 Clone this repository and be sure to include the following flag to also get the corresponding submodules:
   ```
-  git clone --recurse-submodules <Spectator-Mode Repo>
+  git clone --recurse-submodules <spectator-mode repo url>
   ```
 
-Demo scenes, scripts, and prefabs are currently split between the Assets/_SpectatorMode directory and the Nework Anchors Samples directory found by going to Package Manager > Packages: In Project > Custom > Network Anchors > Samples and selecting "Import".
-
 Check out the [Documentation](https://github.com/magicleap/spectator-mode/tree/main/Documentation) directory for detailed walkthrough guides on enabling and integrating Spectator Mode features:
+- [Running The Demo Spectator Mode Scene](https://github.com/magicleap/spectator-mode/Documentation/SpectatorModeDemoScene.md)
+    - Steps to run our pre-built Photon and NDI scene on Magic Leap and Standalone.
 - [Basic Setup and Getting Started with Photon](https://github.com/magicleap/spectator-mode/Documentation/GettingStarted.md)
     -  Project set up and basic scene using Photon Networking to create a co-located Unity experience.
 - [Streaming with NDI and OBS](https://github.com/magicleap/spectator-mode/Documentation/StreamingGuide.md)
     - Creating necessary NDI streaming compnents in unity scene and combining the camera streams using OBS.
-- [Running The Demo Spectator Mode Scene](https://github.com/magicleap/spectator-mode/Documentation/SpectatorModeDemoScene.md)
-    - Steps to run our pre-built Photon and NDI scene on Magic Leap and Standalone.
 - [Image Tracking Mobile Localization](https://github.com/magicleap/spectator-mode/Documentation/MobileLocalization.md)
     - Sharing co-located content between the Magic Leap and a mobile phone (iOS or Android) by scanning an image target to create a cross-platform network anchor.
 
@@ -91,4 +85,7 @@ Check out the [Documentation](https://github.com/magicleap/spectator-mode/tree/m
 A lightweight tool that enables co-location experiences using a shared anchor.
 
 [jp.keijiro.klak.ndi@2.0.2](https://github.com/keijiro/KlakNDI)
-Modified version of keijiro’s Klak NDI package. Modified to exclude Klak libraries from Magic Leap builds. Itself has a dependency on the System.Memory package, also included.
+Keijiro’s Klak NDI package to preform the NDI to OBS streaming. The package itself has a dependency on the System.Memory package, also included.
+
+[Photon 2 Unity Networking](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922)
+This project uses the Photon Unity Networking to manage the network logic.
