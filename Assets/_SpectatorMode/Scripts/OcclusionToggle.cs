@@ -11,6 +11,17 @@ public class OcclusionToggle : MonoBehaviour
 {
 
     public AROcclusionManager ArOcclusionManager;
+
+    private EnvironmentDepthMode _initialDepthMode = EnvironmentDepthMode.Fastest;
+
+    void Awake()
+    {
+        if (ArOcclusionManager == null || ArOcclusionManager.requestedEnvironmentDepthMode == EnvironmentDepthMode.Disabled)
+            return;
+
+        _initialDepthMode = ArOcclusionManager.requestedEnvironmentDepthMode;
+    }
+
     public void ToggleOcclusion(bool value)
     {
         if(ArOcclusionManager == null)
@@ -18,7 +29,7 @@ public class OcclusionToggle : MonoBehaviour
 
         if (value == true)
         {
-            ArOcclusionManager.requestedEnvironmentDepthMode = EnvironmentDepthMode.Fastest;
+            ArOcclusionManager.requestedEnvironmentDepthMode = _initialDepthMode;
         }
         else
         {

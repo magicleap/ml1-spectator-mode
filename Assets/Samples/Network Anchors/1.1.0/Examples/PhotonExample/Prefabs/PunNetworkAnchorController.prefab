@@ -242,6 +242,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1082495713262221846}
     - target: {fileID: 3689454677556526030, guid: c611efc35efc27e47acbd1d6ee1e3359, type: 3}
+      propertyPath: _autoSearchForImage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3689454677556526030, guid: c611efc35efc27e47acbd1d6ee1e3359, type: 3}
       propertyPath: TargetInfo.LongerDimension
       value: 0.288
       objectReference: {fileID: 0}

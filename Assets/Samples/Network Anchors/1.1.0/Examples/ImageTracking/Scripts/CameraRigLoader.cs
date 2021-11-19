@@ -14,7 +14,7 @@ public class CameraRigLoader : MonoBehaviour
     void Start()
     {
         SceneManager.sceneLoaded+= SceneManagerOnsceneLoaded;
-#if PLATFORM_LUMIN
+#if PLATFORM_LUMIN || PLATFORM_STANDALONE
         SceneManager.LoadScene(MagicLeapRigSceneName, LoadSceneMode.Additive);
 #elif PLATFORM_ANDROID || PLATFORM_IOS
         SceneManager.LoadScene(ARFoundationRigSceneName, LoadSceneMode.Additive);
