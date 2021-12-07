@@ -5,7 +5,7 @@ This guide provides the steps to setup and run the example project. The demo sce
 
 ## Photon Setup
 
-1. Open the photon server settings by selecting **Window > PUN Wizard**
+1. Open the photon server settings by selecting **Window > Photon Unity Networking > PUN Wizard**
 2. Select **Setup Project** from the **Pun Wizard** window.
 3. Configure your project to use your Photon App Id or an on premise server.
 
