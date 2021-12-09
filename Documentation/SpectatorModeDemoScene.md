@@ -16,7 +16,7 @@ This guide provides the steps to setup and run the example project. The demo sce
     1. Select the **ARFReferenceImageLibrary** asset under `Assets/Samples/NetworkAnchors/1.1.0/Examples/ImageTracking/ImageTarget`.
     1. Change the **Physical Size (meters)** in the inspector to your prefered size.
     1. Open the **PunSpecatorView** scene located under `_SpecatorMode/Scenes/`
-    1. Select the search for the **MagicLeapCoordinateProvider** object in the Hierarchy and select it. Expand the **Target Info** section in the inspector and set the **Longer Dimension** (meters) value
+    1. Search for the **MagicLeapCoordinateProvider** object in the Hierarchy and select it. Expand the **Target Info** section in the inspector and set the **Longer Dimension** (meters) value.
 
 ## Build and Run
 
