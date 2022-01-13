@@ -37,8 +37,8 @@ To enable ARCore and ARKit:
  3. Make sure ARCore is enabled under Android and ARKit is enabled under iOS.
 
 To enable the AR Foundation components inside the Network Anchors Package:
-1 Go to Project Settings > Player > (Android or iOS, depending on which device you're building to) > Other Settings > Scripting Define Symbols. Add a new input field by clicking the plus symbol, and type "AR_FOUNDATION".
-2 If using iOS (Player Settings > iOS > Other Setttings) Add a "Camera Usage Description"  (ex: "Camera Needed for AR").
+1. Go to Project Settings > Player > (Android or iOS, depending on which device you're building to) > Other Settings > Scripting Define Symbols. Add a new input field by clicking the plus symbol, and type "AR_FOUNDATION".  
+2. If using iOS (Player Settings > iOS > Other Setttings) Add a "Camera Usage Description"  (ex: "Camera Needed for AR").
 
 ## Building the Example
 
